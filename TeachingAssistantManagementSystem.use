@@ -1,0 +1,250 @@
+model TeachingAssistantManagementSystem
+
+-- Classes
+class Person
+attributes
+    first_name   : String
+    midle_mname  : String
+    last_name    : String
+    phone_number : Integer
+end 
+
+
+class AdministrativeAssistant < Person 
+end 
+
+
+class Professor < Person
+attributes
+    posting     : Posting
+end
+
+
+class Student < Person
+attributes 
+    student_email   : String
+    primary_address : Address
+    current_program : Program
+end
+
+
+class Address
+attributes
+    postal_code   : String
+    street_name   : String
+    country       : String
+    province      : String
+    city          : String
+    street_number : Integer
+end
+
+
+class Program
+attributes
+    title               : String
+    type                : ProgramType
+    registration_status : RegistrationStatus
+end
+
+
+class Application
+attributes
+    employee_email       : String
+    english              : Language
+    french               : Language
+    work_address         : Address
+    position             : Posting
+    qualifications       : String
+    unwantedCourses      : Course
+    pastWork             : TAWork
+    otherWork            : OtherWork 
+    research             : Research
+    recommendationLetter : RecommendationLetter
+    applicationStatus    : ApplicationStatus
+    cvLetter             : CV
+    applicationNumber    : Integer
+    
+
+end
+
+
+class Language
+attributes
+    written_level : Profficiency
+    spoken_level  : Profficiency
+    language_name : String
+end
+
+
+class Posting 
+attributes
+    department                            : String
+    description                           : String
+    supervisor                            : String
+    hourly_rate                           : Integer
+    total_hours_worked                    : Integer
+    estimated_number_of_enrolled_students : Integer
+    course                                : Course
+    job_classification                    : JobClassification
+    start_date                            : Integer             -- Use Integers for date objects
+    end_date                              : Integer
+end
+
+
+class Course
+attributes
+    name        : String
+    course_code : String
+    duties      : Duties
+end
+
+
+class Duties
+attributes
+    description : String
+    hours       : Integer
+end
+
+
+class Research
+attributes  
+    title       : String
+    startDate   : Integer       -- According to the USE documentation we should use ints for dates
+    supervisor  : String
+    
+end
+
+
+class Publications < Research
+attributes
+    publisherName    : String
+    dateOfCompletion : Integer
+end
+
+
+class Education
+attributes  
+    institution     : String
+    type            : ProgramType
+    dateCompleted   : Integer 
+end
+
+
+class RecommendationLetter
+attributes
+    relationship        : StudentRelationship
+    performanceScore    : Integer   -- rating from 0-5
+    researchSkillsScore : Integer -- rating from 0-5
+    workPeriod          : String        --??????
+    generalComment      : String
+end
+
+
+class CV
+attributes
+    workExperience      : String -- use array of strings
+end
+
+
+class TAWork
+attributes
+    workType         : JobClassification        
+    faculty          : String
+    courseCode       : String
+    academicYear     : Integer
+    nameOfSupervisor : String
+end
+
+
+class OtherWork
+attributes
+    workType    : String
+end
+
+
+
+-- Enums
+
+enum Profficiency {Fluent, Intermediate, Beginner}
+
+enum ProgramType {Undergrad, PhD, Master}
+
+enum RegistrationStatus {Full_Time, Part_Time, Not_Registered}
+
+enum JobClassification {TA, Corrector}
+
+enum StudentRelationship {Former_Employer, Student}
+
+enum ApplicationStatus {Pending, Rejected, Accepted}
+
+
+-- Associations
+
+association requiresAn between
+Application[*]
+Address[1]
+end
+
+association applicantHasA between
+Application[*]
+Language[2]
+end
+
+association applicantChoosesA between
+Application[*]
+Course[*]
+end
+
+association applicantDoes between
+Application[*]
+Research[*]
+end
+
+association hasA between
+Student[1]
+Application[*]
+end
+
+association hasExperienceWith between
+Application[*]
+OtherWork[*]
+end
+
+association has between
+Course[*]
+Duties[1..*]
+end
+
+association applicantNeedsA between
+Application[*]
+CV[1]
+end
+
+association containsA between
+Application[*]
+Posting[1]
+end
+
+association hasExperienceTeaching between
+Application[*]
+TAWork[*]
+end
+
+association hasAn between
+Student[*]
+Address[1]
+end
+
+association studentApplicationNeedsA between
+Application[*]
+RecommendationLetter[1]
+end
+
+association postsA between
+Professor[1]
+Posting[*]
+end
+
+
+
+

@@ -1,0 +1,167 @@
+model Test
+
+--PEOPLE OF THE SYSTEM
+class Person
+attributes
+    first_name   : String
+    midle_mname  : String
+    last_name    : String
+    phone_number : Integer
+end 
+
+
+class AdministrativeAssistant < Person 
+end 
+
+
+class Professor < Person
+attributes
+end
+
+
+class Student < Person
+attributes 
+    student_email   : String
+    primary_address : Address
+    current_program : Program
+end
+
+
+class Address
+attributes
+    postal_code   : String
+    street_name   : String
+    country       : String
+    province      : String
+    city          : String
+    street_number : Integer
+end
+
+
+class Program
+attributes
+    title               : String
+    type                : ProgramType
+    registration_status : RegistrationStatus
+end
+
+
+class Candidate < Student 
+attributes
+    employee_email  : String
+    english         : Language
+    french          : Language
+    work_address    : Address
+    --positions      : ArrayList<Posting>  This should be an array but can't figure out syntax >:(
+    qualifications  : String
+    --unwantedCourses : ArrayList<Course>
+   -- pastWork        : ArrayList<String>  Also unsure on type for the next two
+   -- otherWork       : ArrayList<String> 
+   -- research         : ArrayList<Research>
+   recommendationLetter : RecommendationLetter
+   cvLetter         : CV
+
+end
+
+
+class Language
+attributes
+    written_level : Profficiency
+    spoken_level  : Profficiency
+    language_name : String
+end
+
+
+class Posting 
+attributes
+    department                            : String
+    description                           : String
+    supervisor                            : String
+    hourly_rate                           : Integer
+    total_hours_worked                    : Integer
+    estimated_number_of_enrolled_students : Integer
+    course                                : Course
+    job_classification                    : JobClassification
+    start_date                            : Integer             -- Use Integers for date objects
+    end_date                              : Integer
+end
+
+
+class Course
+attributes
+    name        : String
+    course_code : String
+    duties      : Duties
+end
+
+
+class Duties
+attributes
+    description : String
+    hours       : Integer
+end
+
+class Research
+attributes  
+    title       : String
+    startDate   : Integer       -- According to the USE documentation we should use ints for dates
+    suoervisor  : String
+    
+end
+
+class Publications < Research
+attributes
+    publisherName    : String
+    dateOfCompletion : Integer
+end
+
+class Education
+attributes  
+    institution     : String
+    type            : ProgramType
+    dateCompleted   : Integer 
+end
+
+class RecommendationLetter
+attributes
+    relationship        : StudentRelationship
+    performanceScore    : Integer   -- rating from 0-5
+    researchSkillsScore : Integer -- rating from 0-5
+    workPeriod          : String        --??????
+    generalComment      : String
+end
+
+class CV
+attributes
+    workExperience      : String -- use array of strings
+end
+
+class Work
+attributes
+    type    : String
+end
+
+class TAWork < Work
+attributes
+    workType         : JobClassification        -- Cannot have type if it extends Work 
+    faculty          : String
+    courseCode       : String
+    academicYear     : Integer
+    nameOfSupervisor : String
+end
+
+
+enum Profficiency {Fluent, Intermediate, Beginner}
+
+enum ProgramType {Undergrad, PhD, Master}
+
+enum RegistrationStatus {Full_Time, Part_Time, Not_Registered}
+
+enum JobClassification {TA, Corrector}
+
+enum StudentRelationship {Former_Employer, Student}
+
+
+
+
+
