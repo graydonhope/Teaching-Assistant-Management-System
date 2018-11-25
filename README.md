@@ -1,5 +1,5 @@
 # Teaching-Assistant-Management-System
-Creating a System Model for Teaching Assistant Management System Specification
+Creating a System Model for Teaching Assistant Management System Specification using USE Software
 
 
 System spec ification: Teaching Assistant Management Systems (TAMS)
